@@ -42,8 +42,18 @@ export default function App() {
     case 'login':
       return (
         <LoginPage
-          onSuccess={(data) => { setLoginData(data); setStep('dashboard'); }}
+          onSuccess={(data) => { setLoginData(data); setStep('login-mfa'); }}
           onBack={() => setStep('landing')}
+        />
+      );
+
+    case 'login-mfa':
+      return (
+        <MfaPage
+          mode="login"
+          registrationData={loginData}
+          onSuccess={() => setStep('dashboard')}
+          onReset={handleReset}
         />
       );
 
