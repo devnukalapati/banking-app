@@ -3,7 +3,8 @@ import Banner from '../components/Banner';
 import { verifyMfa } from '../services/userApi';
 import './MfaPage.css';
 
-export default function MfaPage({ registrationData, applicationData, onSuccess, onReset }) {
+// mode: 'register' (default) | 'login'
+export default function MfaPage({ registrationData, applicationData, onSuccess, onReset, mode = 'register' }) {
   const [digits, setDigits]         = useState(['', '', '', '']);
   const [error, setError]           = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -81,11 +82,12 @@ export default function MfaPage({ registrationData, applicationData, onSuccess, 
       <div className="mfa-body">
         <div className="mfa-card">
           <div className="mfa-lock-icon">🔐</div>
-          <span className="mfa-step-badge">Step 3 of 3</span>
+          {mode === 'register' && <span className="mfa-step-badge">Step 3 of 3</span>}
           <h1 className="mfa-title">Verify Your Identity</h1>
           <p className="mfa-subtitle">
-            Enter the 4-digit verification code sent to your registered
-            phone number to complete account setup.
+            {mode === 'login'
+              ? 'Enter the 4-digit verification code to complete sign in.'
+              : 'Enter the 4-digit verification code sent to your registered phone number to complete account setup.'}
           </p>
 
           <div className={`mfa-otp-wrap ${shake ? 'shake' : ''}`}>

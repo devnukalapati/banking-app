@@ -15,3 +15,8 @@ export async function verifyMfa(payload) {
   const { data } = await api.post('/api/users/verify-mfa', payload);
   return data;
 }
+
+export async function loginUser(payload) {
+  const { data } = await api.post('/api/users/login', payload);
+  return data;
+}
