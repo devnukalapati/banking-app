@@ -1,4 +1,6 @@
 import Banner from '../components/Banner';
+import CardArt from '../components/CardArt';
+import { CREDIT_CARDS } from '../data/creditCards';
 import './LandingPage.css';
 
 export default function LandingPage({ onApply, onLogin }) {
@@ -6,41 +8,80 @@ export default function LandingPage({ onApply, onLogin }) {
     <div className="landing-page">
       <Banner />
 
-      <main className="landing-body">
-        <div className="landing-hero">
-          <h1 className="landing-headline">
-            Banking built for<br />
-            <span className="landing-headline-accent">your future</span>
-          </h1>
-          <p className="landing-tagline">
-            Apply for a NexaBank credit card or access your existing account.
-          </p>
-        </div>
-
-        <div className="landing-cards">
-          <button className="landing-card landing-card--apply" onClick={onApply}>
-            <span className="lc-icon">💳</span>
-            <div className="lc-content">
-              <h2 className="lc-title">Apply for a Credit Card</h2>
-              <p className="lc-description">
-                Start your application today. Get a decision in minutes.
-              </p>
-            </div>
-            <span className="lc-arrow">→</span>
+      {/* Hero */}
+      <div className="landing-hero">
+        <h1 className="landing-headline">
+          Find the card that's <span className="landing-accent">right for you</span>
+        </h1>
+        <p className="landing-tagline">
+          Compare NexaBank credit cards and apply in minutes.
+          Already a member?{' '}
+          <button className="landing-login-link" onClick={onLogin}>
+            Sign in →
           </button>
+        </p>
+      </div>
 
-          <button className="landing-card landing-card--login" onClick={onLogin}>
-            <span className="lc-icon">🔒</span>
-            <div className="lc-content">
-              <h2 className="lc-title">Log In to Your Account</h2>
-              <p className="lc-description">
-                Already a member? Sign in to view your account.
-              </p>
+      {/* Card catalog */}
+      <div className="landing-catalog">
+        {CREDIT_CARDS.map((card) => (
+          <div key={card.id} className="cc-row">
+            {/* Card art */}
+            <div className="cc-art-wrap">
+              <CardArt card={card} size="md" />
             </div>
-            <span className="lc-arrow">→</span>
+
+            {/* Product details */}
+            <div className="cc-details">
+              <div className="cc-header">
+                <div>
+                  <h2 className="cc-name">{card.name}</h2>
+                  <p className="cc-tagline">{card.tagline}</p>
+                </div>
+                <div className="cc-meta">
+                  <div className="cc-meta-item">
+                    <span className="cc-meta-label">Annual Fee</span>
+                    <span className="cc-meta-value">{card.annualFee}</span>
+                  </div>
+                  <div className="cc-meta-item">
+                    <span className="cc-meta-label">APR</span>
+                    <span className="cc-meta-value">{card.apr}</span>
+                  </div>
+                </div>
+              </div>
+
+              <ul className="cc-offers">
+                {card.offers.map((offer, i) => (
+                  <li key={i} className="cc-offer-item">
+                    <span className="cc-offer-icon">{offer.icon}</span>
+                    <span className="cc-offer-text">{offer.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* CTA */}
+            <div className="cc-cta">
+              <button
+                className="btn-apply-now"
+                onClick={() => onApply(card)}
+              >
+                Apply Now →
+              </button>
+              <p className="cc-cta-note">No impact to credit score to check eligibility</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <footer className="landing-footer">
+        <p>
+          Already have a NexaBank account?{' '}
+          <button className="landing-login-link" onClick={onLogin}>
+            Log in to your account →
           </button>
-        </div>
-      </main>
+        </p>
+      </footer>
     </div>
   );
 }

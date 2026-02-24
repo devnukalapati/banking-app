@@ -4,6 +4,7 @@ import AddressDetails from './form/AddressDetails';
 import EmploymentDetails from './form/EmploymentDetails';
 import FinancialInfo from './form/FinancialInfo';
 import SSNInput from './form/SSNInput';
+import CardArt from './CardArt';
 import { submitCustomer } from '../services/customerApi';
 import './CustomerForm.css';
 
@@ -67,7 +68,7 @@ function buildPayload(data) {
   };
 }
 
-export default function CustomerForm({ onSuccess }) {
+export default function CustomerForm({ onSuccess, selectedCard }) {
   const [formData, setFormData]     = useState(INITIAL_STATE);
   const [errors, setErrors]         = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -118,6 +119,24 @@ export default function CustomerForm({ onSuccess }) {
 
   return (
     <div className="form-container">
+      {selectedCard && (
+        <div className="selected-card-banner">
+          <CardArt card={selectedCard} size="sm" />
+          <div className="scb-info">
+            <p className="scb-label">Applying for</p>
+            <h2 className="scb-name">{selectedCard.name}</h2>
+            <p className="scb-tagline">{selectedCard.tagline}</p>
+            <ul className="scb-offers">
+              {selectedCard.offers.slice(0, 3).map((offer, i) => (
+                <li key={i}>
+                  <span>{offer.icon}</span> {offer.text}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+
       <div className="form-heading">
         <h1>Customer Registration</h1>
         <p>Complete all required fields to open your NexaBank account.</p>
