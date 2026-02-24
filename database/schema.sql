@@ -58,6 +58,32 @@ CREATE TABLE IF NOT EXISTS app_users (
 
 CREATE INDEX IF NOT EXISTS idx_app_users_customer_id ON app_users(customer_id);
 
+-- ── Bank Accounts ────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS bank_accounts (
+    id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    customer_id     UUID            NOT NULL UNIQUE REFERENCES customers(id),
+    account_number  VARCHAR(20)     NOT NULL UNIQUE,
+    account_type    VARCHAR(50)     NOT NULL,
+    balance         DECIMAL(15, 2)  NOT NULL DEFAULT 0.00,
+    currency        CHAR(3)         NOT NULL DEFAULT 'USD',
+    created_at      TIMESTAMPTZ     NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_bank_accounts_customer_id ON bank_accounts(customer_id);
+
+-- ── Transactions ─────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS transactions (
+    id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    account_id      UUID            NOT NULL REFERENCES bank_accounts(id),
+    type            VARCHAR(10)     NOT NULL CHECK (type IN ('CREDIT','DEBIT')),
+    amount          DECIMAL(15, 2)  NOT NULL CHECK (amount > 0),
+    description     VARCHAR(255)    NOT NULL,
+    category        VARCHAR(50),
+    transacted_at   TIMESTAMPTZ     NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_transactions_account_id ON transactions(account_id);
+
 -- Auto-update updated_at on row modification
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
