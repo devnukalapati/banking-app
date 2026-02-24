@@ -3,7 +3,7 @@ import Banner from '../components/Banner';
 import { loginUser } from '../services/userApi';
 import './LoginPage.css';
 
-export default function LoginPage({ onSuccess, onBack }) {
+export default function LoginPage({ onSuccess, onBack, onHome }) {
   const [form, setForm]             = useState({ username: '', password: '' });
   const [errors, setErrors]         = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -44,7 +44,7 @@ export default function LoginPage({ onSuccess, onBack }) {
 
   return (
     <div className="login-page">
-      <Banner />
+      <Banner onHome={onHome} />
       <div className="login-body">
         <div className="login-card">
           <h1 className="login-title">Welcome back</h1>

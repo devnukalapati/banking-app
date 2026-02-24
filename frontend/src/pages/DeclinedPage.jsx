@@ -1,7 +1,7 @@
 import Banner from '../components/Banner';
 import './ResultPage.css';
 
-export default function DeclinedPage({ data, onReset }) {
+export default function DeclinedPage({ data, onReset, onHome }) {
   const name = `${data.firstName} ${data.lastName}`;
   const submittedOn = new Date(data.createdAt).toLocaleDateString('en-US', {
     year: 'numeric', month: 'long', day: 'numeric',
@@ -16,7 +16,7 @@ export default function DeclinedPage({ data, onReset }) {
 
   return (
     <div className="result-page bg-declined">
-      <Banner />
+      <Banner onHome={onHome} />
       <div className="result-body">
         <div className="result-card">
           <span className="result-icon">❌</span>
