@@ -9,6 +9,7 @@ A full-stack banking application built with **React + Vite** (frontend) and **Sp
 - [Features](#features)
 - [Architecture Overview](#architecture-overview)
 - [User Flows](#user-flows)
+- [Screenshots](#screenshots)
 - [Project Structure](#project-structure)
 - [Local Development Setup](#local-development-setup)
   - [1. Clone the Repository](#1-clone-the-repository)
@@ -120,6 +121,34 @@ Displays after successful login or registration:
 - Customer profile (name, username, MFA status, member since)
 - Account details (account number, type, currency)
 - Recent transactions list (newest first, colour-coded credits/debits)
+
+---
+
+## Screenshots
+
+### 1. Landing Page — Credit Card Catalog
+![Landing Page](docs/screenshots/01-landing-page.png)
+
+### 2. Credit Card Application Form
+![Application Form — Card Banner](docs/screenshots/02-application-form-empty.png)
+
+### 3. Application Form — Filled
+![Application Form — Filled](docs/screenshots/03-application-form-filled.png)
+
+### 4. Application Approved
+![Approved Page](docs/screenshots/04-approved-page.png)
+
+### 5. User Registration (Step 2 of 3)
+![User Registration](docs/screenshots/05-user-registration.png)
+
+### 6. MFA Verification (Step 3 of 3)
+![MFA Verification](docs/screenshots/06-mfa-verification.png)
+
+### 7. Welcome Page
+![Welcome Page](docs/screenshots/07-welcome-page.png)
+
+### 8. Customer Banking Dashboard
+![Customer Dashboard](docs/screenshots/08-customer-dashboard.png)
 
 ---
 
