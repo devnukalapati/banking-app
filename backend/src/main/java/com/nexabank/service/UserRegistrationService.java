@@ -25,6 +25,7 @@ public class UserRegistrationService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final AccountService accountService;
 
     @Transactional
     public UserRegistrationResponse registerUser(UserRegistrationRequest request) {
@@ -70,6 +71,9 @@ public class UserRegistrationService {
         user.setMfaVerified(true);
         userRepository.save(user);
         log.info("MFA verified for user: id={}", user.getId());
+
+        // Provision bank account on first successful MFA (idempotent)
+        accountService.createAccount(user.getCustomerId());
 
         return MfaVerificationResponse.builder()
                 .verified(true)

@@ -27,6 +27,7 @@ class UserRegistrationServiceTest {
 
     @Mock private UserRepository userRepository;
     @Mock private BCryptPasswordEncoder passwordEncoder;
+    @Mock private AccountService accountService;
 
     @InjectMocks
     private UserRegistrationService userRegistrationService;
@@ -90,6 +91,7 @@ class UserRegistrationServiceTest {
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(savedUser));
         when(userRepository.save(any(AppUser.class))).thenReturn(savedUser);
+        when(accountService.createAccount(customerId)).thenReturn(null);
 
         MfaVerificationResponse response = userRegistrationService.verifyMfa(req);
 
