@@ -12,10 +12,11 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 
 export default function App() {
-  const [step, setStep]                     = useState('landing');
+  const [step, setStep]                       = useState('landing');
+  const [selectedCard, setSelectedCard]       = useState(null);
   const [applicationData, setApplicationData] = useState(null);
   const [registrationData, setRegistrationData] = useState(null);
-  const [loginData, setLoginData]           = useState(null);
+  const [loginData, setLoginData]             = useState(null);
 
   function handleApplicationSuccess(data) {
     setApplicationData(data);
@@ -24,6 +25,7 @@ export default function App() {
 
   function handleReset() {
     setStep('landing');
+    setSelectedCard(null);
     setApplicationData(null);
     setRegistrationData(null);
     setLoginData(null);
@@ -34,7 +36,7 @@ export default function App() {
     case 'landing':
       return (
         <LandingPage
-          onApply={() => setStep('form')}
+          onApply={(card) => { setSelectedCard(card); setStep('form'); }}
           onLogin={() => setStep('login')}
         />
       );
@@ -125,7 +127,10 @@ export default function App() {
         <div className="app-layout">
           <Banner />
           <main className="app-main">
-            <CustomerForm onSuccess={handleApplicationSuccess} />
+            <CustomerForm
+              onSuccess={handleApplicationSuccess}
+              selectedCard={selectedCard}
+            />
           </main>
         </div>
       );

@@ -4,6 +4,66 @@
   margin: 0 auto;
 }
 
+/* ─── Selected Card Banner ──────────────────────────── */
+.selected-card-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.75rem;
+  color: #fff;
+}
+
+.scb-info { flex: 1; min-width: 0; }
+
+.scb-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 0.2rem;
+}
+
+.scb-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.scb-tagline {
+  font-size: 0.825rem;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 0.85rem;
+}
+
+.scb-offers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.scb-offers li {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+@media (max-width: 600px) {
+  .selected-card-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem;
+  }
+}
+
 .form-heading {
   margin-bottom: 1.75rem;
 }
