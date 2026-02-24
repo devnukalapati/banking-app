@@ -27,3 +27,6 @@ dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# Raw screenshot assets (tracked copies live in docs/screenshots/)
+assets/
