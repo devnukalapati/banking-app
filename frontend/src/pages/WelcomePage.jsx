@@ -1,7 +1,7 @@
 import Banner from '../components/Banner';
 import './WelcomePage.css';
 
-export default function WelcomePage({ registrationData, applicationData, onReset }) {
+export default function WelcomePage({ registrationData, applicationData, onDashboard, onReset }) {
   return (
     <div className="welcome-page">
       <Banner />
@@ -38,7 +38,7 @@ export default function WelcomePage({ registrationData, applicationData, onReset
           </div>
 
           <div className="welcome-actions">
-            <button className="btn-welcome-primary">
+            <button className="btn-welcome-primary" onClick={onDashboard}>
               Go to Dashboard
             </button>
             <button className="btn-welcome-secondary" onClick={onReset}>

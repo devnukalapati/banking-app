@@ -94,7 +94,18 @@ export default function App() {
         <MfaPage
           registrationData={registrationData}
           applicationData={applicationData}
-          onSuccess={() => setStep('welcome')}
+          onSuccess={() => {
+            setLoginData({
+              userId:            registrationData.userId,
+              username:          registrationData.username,
+              customerId:        registrationData.customerId,
+              firstName:         applicationData.firstName,
+              lastName:          applicationData.lastName,
+              applicationStatus: applicationData.applicationStatus,
+              mfaVerified:       true,
+            });
+            setStep('welcome');
+          }}
           onReset={handleReset}
         />
       );
@@ -104,6 +115,7 @@ export default function App() {
         <WelcomePage
           registrationData={registrationData}
           applicationData={applicationData}
+          onDashboard={() => setStep('dashboard')}
           onReset={handleReset}
         />
       );
