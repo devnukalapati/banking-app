@@ -1,5 +1,6 @@
 package com.nexabank.dto;
 
+import com.nexabank.model.ApplicationStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -31,5 +32,6 @@ public class CustomerResponse {
     private String accountType;
     private String creditScoreRange;
     private String ssnMasked;
+    private ApplicationStatus applicationStatus;
     private LocalDateTime createdAt;
 }

@@ -67,7 +67,7 @@ function buildPayload(data) {
   };
 }
 
-export default function CustomerForm() {
+export default function CustomerForm({ onSuccess }) {
   const [formData, setFormData]     = useState(INITIAL_STATE);
   const [errors, setErrors]         = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -96,20 +96,7 @@ export default function CustomerForm() {
     setSubmitting(true);
     try {
       const response = await submitCustomer(buildPayload(formData));
-      setNotification({
-        type: 'success',
-        title: 'Application submitted successfully!',
-        body: (
-          <>
-            Customer ID: <code>{response.id}</code>
-            <br />
-            SSN on file: <strong>{response.ssnMasked}</strong>
-          </>
-        ),
-      });
-      setFormData(INITIAL_STATE);
-      setErrors({});
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      onSuccess(response);
     } catch (err) {
       const apiMessage =
         err.response?.data?.message ||

@@ -4,6 +4,7 @@ import com.nexabank.dto.CustomerRequest;
 import com.nexabank.dto.CustomerResponse;
 import com.nexabank.exception.CustomerAlreadyExistsException;
 import com.nexabank.exception.CustomerNotFoundException;
+import com.nexabank.model.ApplicationStatus;
 import com.nexabank.model.Customer;
 import com.nexabank.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,6 +83,7 @@ class CustomerServiceTest {
                 .accountType("CHECKING")
                 .creditScoreRange("740-799")
                 .ssnEncrypted("encrypted-ssn-blob")
+                .applicationStatus(ApplicationStatus.APPROVED)
                 .createdAt(LocalDateTime.now())
                 .build();
     }
@@ -97,6 +99,7 @@ class CustomerServiceTest {
 
         assertThat(response.getEmail()).isEqualTo("jane.smith@example.com");
         assertThat(response.getSsnMasked()).isEqualTo("***-**-4321");
+        assertThat(response.getApplicationStatus()).isNotNull();
         verify(customerRepository).save(any(Customer.class));
     }
 
@@ -122,6 +125,7 @@ class CustomerServiceTest {
 
         assertThat(response.getId()).isEqualTo(id);
         assertThat(response.getSsnMasked()).isEqualTo("***-**-4321");
+        assertThat(response.getApplicationStatus()).isEqualTo(ApplicationStatus.APPROVED);
     }
 
     @Test
@@ -131,5 +135,28 @@ class CustomerServiceTest {
 
         assertThatThrownBy(() -> customerService.getCustomer(unknownId))
                 .isInstanceOf(CustomerNotFoundException.class);
+    }
+
+    // ── Application status determination ──────────────────
+
+    @Test
+    void determineStatus_approved_for_rand_below_0_80() {
+        assertThat(customerService.determineApplicationStatus(0.0)).isEqualTo(ApplicationStatus.APPROVED);
+        assertThat(customerService.determineApplicationStatus(0.50)).isEqualTo(ApplicationStatus.APPROVED);
+        assertThat(customerService.determineApplicationStatus(0.799)).isEqualTo(ApplicationStatus.APPROVED);
+    }
+
+    @Test
+    void determineStatus_pending_for_rand_between_0_80_and_0_90() {
+        assertThat(customerService.determineApplicationStatus(0.80)).isEqualTo(ApplicationStatus.PENDING);
+        assertThat(customerService.determineApplicationStatus(0.85)).isEqualTo(ApplicationStatus.PENDING);
+        assertThat(customerService.determineApplicationStatus(0.899)).isEqualTo(ApplicationStatus.PENDING);
+    }
+
+    @Test
+    void determineStatus_declined_for_rand_0_90_and_above() {
+        assertThat(customerService.determineApplicationStatus(0.90)).isEqualTo(ApplicationStatus.DECLINED);
+        assertThat(customerService.determineApplicationStatus(0.95)).isEqualTo(ApplicationStatus.DECLINED);
+        assertThat(customerService.determineApplicationStatus(0.999)).isEqualTo(ApplicationStatus.DECLINED);
     }
 }
