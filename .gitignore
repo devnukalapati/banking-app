@@ -4,6 +4,9 @@
 backend/.env
 frontend/.env
 
+# MCP config (contains project-specific URLs)
+.mcp.json
+
 # Java / Maven
 target/
 *.class
