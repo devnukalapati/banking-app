@@ -7,11 +7,15 @@ import DeclinedPage from './pages/DeclinedPage';
 import UserRegistrationPage from './pages/UserRegistrationPage';
 import MfaPage from './pages/MfaPage';
 import WelcomePage from './pages/WelcomePage';
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
+import DashboardPage from './pages/DashboardPage';
 
 export default function App() {
-  const [step, setStep]                     = useState('form');
+  const [step, setStep]                     = useState('landing');
   const [applicationData, setApplicationData] = useState(null);
   const [registrationData, setRegistrationData] = useState(null);
+  const [loginData, setLoginData]           = useState(null);
 
   function handleApplicationSuccess(data) {
     setApplicationData(data);
@@ -19,13 +23,38 @@ export default function App() {
   }
 
   function handleReset() {
-    setStep('form');
+    setStep('landing');
     setApplicationData(null);
     setRegistrationData(null);
+    setLoginData(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   switch (step) {
+    case 'landing':
+      return (
+        <LandingPage
+          onApply={() => setStep('form')}
+          onLogin={() => setStep('login')}
+        />
+      );
+
+    case 'login':
+      return (
+        <LoginPage
+          onSuccess={(data) => { setLoginData(data); setStep('dashboard'); }}
+          onBack={() => setStep('landing')}
+        />
+      );
+
+    case 'dashboard':
+      return (
+        <DashboardPage
+          loginData={loginData}
+          onSignOut={handleReset}
+        />
+      );
+
     case 'approved':
       return (
         <ApprovedPage
@@ -34,6 +63,7 @@ export default function App() {
           onReset={handleReset}
         />
       );
+
     case 'pending':
       return <PendingPage data={applicationData} onReset={handleReset} />;
 
