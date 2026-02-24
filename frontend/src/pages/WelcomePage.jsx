@@ -1,10 +1,10 @@
 import Banner from '../components/Banner';
 import './WelcomePage.css';
 
-export default function WelcomePage({ registrationData, applicationData, onDashboard, onReset }) {
+export default function WelcomePage({ registrationData, applicationData, onDashboard, onReset, onHome }) {
   return (
     <div className="welcome-page">
-      <Banner />
+      <Banner onHome={onHome} />
       <div className="welcome-body">
         <div className="welcome-card">
           <div className="welcome-confetti">🎉</div>

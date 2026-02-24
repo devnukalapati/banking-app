@@ -1,7 +1,7 @@
 import Banner from '../components/Banner';
 import './ResultPage.css';
 
-export default function ApprovedPage({ data, onProceed, onReset }) {
+export default function ApprovedPage({ data, onProceed, onReset, onHome }) {
   const name = `${data.firstName} ${data.lastName}`;
   const submittedOn = new Date(data.createdAt).toLocaleDateString('en-US', {
     year: 'numeric', month: 'long', day: 'numeric',
@@ -9,7 +9,7 @@ export default function ApprovedPage({ data, onProceed, onReset }) {
 
   return (
     <div className="result-page bg-approved">
-      <Banner />
+      <Banner onHome={onHome} />
       <div className="result-body">
         <div className="result-card">
           <span className="result-icon">✅</span>

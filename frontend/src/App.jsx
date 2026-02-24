@@ -46,6 +46,7 @@ export default function App() {
         <LoginPage
           onSuccess={(data) => { setLoginData(data); setStep('login-mfa'); }}
           onBack={() => setStep('landing')}
+          onHome={handleReset}
         />
       );
 
@@ -56,6 +57,7 @@ export default function App() {
           registrationData={loginData}
           onSuccess={() => setStep('dashboard')}
           onReset={handleReset}
+          onHome={handleReset}
         />
       );
 
@@ -64,6 +66,7 @@ export default function App() {
         <DashboardPage
           loginData={loginData}
           onSignOut={handleReset}
+          onHome={handleReset}
         />
       );
 
@@ -73,14 +76,15 @@ export default function App() {
           data={applicationData}
           onProceed={() => setStep('registration')}
           onReset={handleReset}
+          onHome={handleReset}
         />
       );
 
     case 'pending':
-      return <PendingPage data={applicationData} onReset={handleReset} />;
+      return <PendingPage data={applicationData} onReset={handleReset} onHome={handleReset} />;
 
     case 'declined':
-      return <DeclinedPage data={applicationData} onReset={handleReset} />;
+      return <DeclinedPage data={applicationData} onReset={handleReset} onHome={handleReset} />;
 
     case 'registration':
       return (
@@ -88,6 +92,7 @@ export default function App() {
           applicationData={applicationData}
           onSuccess={(data) => { setRegistrationData(data); setStep('mfa'); }}
           onReset={handleReset}
+          onHome={handleReset}
         />
       );
 
@@ -109,6 +114,7 @@ export default function App() {
             setStep('welcome');
           }}
           onReset={handleReset}
+          onHome={handleReset}
         />
       );
 
@@ -119,13 +125,14 @@ export default function App() {
           applicationData={applicationData}
           onDashboard={() => setStep('dashboard')}
           onReset={handleReset}
+          onHome={handleReset}
         />
       );
 
     default:
       return (
         <div className="app-layout">
-          <Banner />
+          <Banner onHome={handleReset} />
           <main className="app-main">
             <CustomerForm
               onSuccess={handleApplicationSuccess}

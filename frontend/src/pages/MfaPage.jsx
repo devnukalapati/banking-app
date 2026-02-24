@@ -4,7 +4,7 @@ import { verifyMfa } from '../services/userApi';
 import './MfaPage.css';
 
 // mode: 'register' (default) | 'login'
-export default function MfaPage({ registrationData, applicationData, onSuccess, onReset, mode = 'register' }) {
+export default function MfaPage({ registrationData, applicationData, onSuccess, onReset, onHome, mode = 'register' }) {
   const [digits, setDigits]         = useState(['', '', '', '']);
   const [error, setError]           = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -78,7 +78,7 @@ export default function MfaPage({ registrationData, applicationData, onSuccess, 
 
   return (
     <div className="mfa-page">
-      <Banner />
+      <Banner onHome={onHome} />
       <div className="mfa-body">
         <div className="mfa-card">
           <div className="mfa-lock-icon">🔐</div>

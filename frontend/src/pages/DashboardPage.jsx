@@ -25,7 +25,7 @@ function formatDate(isoString) {
   });
 }
 
-export default function DashboardPage({ loginData, onSignOut }) {
+export default function DashboardPage({ loginData, onSignOut, onHome }) {
   const [account, setAccount]       = useState(null);
   const [transactions, setTxns]     = useState([]);
   const [loading, setLoading]       = useState(true);
@@ -53,7 +53,7 @@ export default function DashboardPage({ loginData, onSignOut }) {
 
   return (
     <div className="db-page">
-      <Banner />
+      <Banner onHome={onHome} />
 
       {/* Top bar */}
       <div className="db-topbar">

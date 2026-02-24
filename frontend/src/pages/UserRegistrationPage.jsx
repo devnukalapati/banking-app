@@ -10,7 +10,7 @@ const rules = [
   { id: 'num',   label: 'One number',              test: (p) => /[0-9]/.test(p) },
 ];
 
-export default function UserRegistrationPage({ applicationData, onSuccess, onReset }) {
+export default function UserRegistrationPage({ applicationData, onSuccess, onReset, onHome }) {
   const [form, setForm]           = useState({ username: '', password: '', confirm: '' });
   const [errors, setErrors]       = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -63,7 +63,7 @@ export default function UserRegistrationPage({ applicationData, onSuccess, onRes
 
   return (
     <div className="reg-page">
-      <Banner />
+      <Banner onHome={onHome} />
       <div className="reg-body">
         <div className="reg-card">
           <div className="reg-header">
