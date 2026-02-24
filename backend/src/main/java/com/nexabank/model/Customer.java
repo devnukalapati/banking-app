@@ -83,6 +83,11 @@ public class Customer {
     @Column(name = "ssn_encrypted", nullable = false, columnDefinition = "TEXT")
     private String ssnEncrypted;
 
+    // Application decision
+    @Enumerated(EnumType.STRING)
+    @Column(name = "application_status", nullable = false, length = 20)
+    private ApplicationStatus applicationStatus;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 

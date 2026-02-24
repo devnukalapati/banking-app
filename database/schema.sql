@@ -35,6 +35,9 @@ CREATE TABLE IF NOT EXISTS customers (
     -- SSN — stored as AES-256-GCM ciphertext (base64 encoded: IV || ciphertext)
     ssn_encrypted    TEXT            NOT NULL,
 
+    -- Application decision (APPROVED | PENDING | DECLINED)
+    application_status VARCHAR(20)   NOT NULL DEFAULT 'PENDING',
+
     -- Metadata
     created_at       TIMESTAMPTZ     NOT NULL DEFAULT NOW(),
     updated_at       TIMESTAMPTZ     NOT NULL DEFAULT NOW()
