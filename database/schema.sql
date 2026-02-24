@@ -46,6 +46,18 @@ CREATE TABLE IF NOT EXISTS customers (
 -- Fast email lookups
 CREATE INDEX IF NOT EXISTS idx_customers_email ON customers(email);
 
+-- ── App Users (post-approval account registration) ──────
+CREATE TABLE IF NOT EXISTS app_users (
+    id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username        VARCHAR(50)  NOT NULL UNIQUE,
+    password_hash   VARCHAR(255) NOT NULL,
+    customer_id     UUID         NOT NULL REFERENCES customers(id),
+    mfa_verified    BOOLEAN      NOT NULL DEFAULT FALSE,
+    created_at      TIMESTAMPTZ  NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_app_users_customer_id ON app_users(customer_id);
+
 -- Auto-update updated_at on row modification
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
