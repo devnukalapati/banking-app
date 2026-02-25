@@ -74,6 +74,9 @@ public class CustomerRequest {
     private String accountType;
     private String creditScoreRange;
 
+    // Card product selected on the landing page (optional)
+    private String cardProduct;
+
     // SSN
     @NotBlank(message = "SSN is required")
     @Pattern(regexp = "^[0-9]{3}-[0-9]{2}-[0-9]{4}$", message = "SSN must be in format XXX-XX-XXXX")

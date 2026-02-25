@@ -56,6 +56,7 @@ class UserLoginServiceTest {
         customer.setFirstName("Jane");
         customer.setLastName("Smith");
         customer.setApplicationStatus(ApplicationStatus.APPROVED);
+        customer.setCardProduct("cashback");
 
         validRequest = new LoginRequest();
         validRequest.setUsername("janesmith");
@@ -76,6 +77,7 @@ class UserLoginServiceTest {
         assertThat(response.getFirstName()).isEqualTo("Jane");
         assertThat(response.getLastName()).isEqualTo("Smith");
         assertThat(response.getApplicationStatus()).isEqualTo(ApplicationStatus.APPROVED);
+        assertThat(response.getCardProduct()).isEqualTo("cashback");
         assertThat(response.isMfaVerified()).isTrue();
     }
 

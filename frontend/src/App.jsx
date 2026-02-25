@@ -109,6 +109,7 @@ export default function App() {
               firstName:         applicationData.firstName,
               lastName:          applicationData.lastName,
               applicationStatus: applicationData.applicationStatus,
+              cardProduct:       applicationData.cardProduct,
               mfaVerified:       true,
             });
             setStep('welcome');

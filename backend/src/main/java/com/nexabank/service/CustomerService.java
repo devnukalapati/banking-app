@@ -51,6 +51,7 @@ public class CustomerService {
                 .accountType(request.getAccountType())
                 .creditScoreRange(request.getCreditScoreRange())
                 .ssnEncrypted(encryptionService.encrypt(request.getSsn()))
+                .cardProduct(request.getCardProduct())
                 .applicationStatus(status)
                 .build();
 
@@ -104,6 +105,7 @@ public class CustomerService {
                 .accountType(c.getAccountType())
                 .creditScoreRange(c.getCreditScoreRange())
                 .ssnMasked(maskedSSN)
+                .cardProduct(c.getCardProduct())
                 .applicationStatus(c.getApplicationStatus())
                 .createdAt(c.getCreatedAt())
                 .build();

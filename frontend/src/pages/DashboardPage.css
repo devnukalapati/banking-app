@@ -270,6 +270,176 @@
 .db-txn-credit { color: #276749; }
 .db-txn-debit  { color: #c53030; }
 
+/* ── Tab bar ──────────────────────────────────────────────────────────────── */
+.db-tabs {
+  display: flex;
+  gap: 0.25rem;
+  background: #e2e8f0;
+  border-radius: 10px;
+  padding: 0.3rem;
+}
+
+.db-tab-btn {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: #718096;
+  font-size: 0.825rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.db-tab-btn:hover { background: rgba(255,255,255,0.6); color: #2d3748; }
+
+.db-tab-btn--active {
+  background: #fff;
+  color: #2b6cb0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* ── Rewards summary ──────────────────────────────────────────────────────── */
+.db-rewards-summary {
+  display: flex;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.db-rewards-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+  min-width: 140px;
+}
+
+.db-rewards-summary-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.db-rewards-summary-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+/* ── Rewards breakdown ────────────────────────────────────────────────────── */
+.db-rewards-breakdown-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #a0aec0;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 0.75rem;
+}
+
+.db-rewards-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.db-rewards-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f0f4f8;
+  font-size: 0.875rem;
+}
+
+.db-rewards-row:last-child { border-bottom: none; }
+
+.db-rewards-icon { font-size: 1.3rem; width: 2rem; text-align: center; flex-shrink: 0; }
+.db-rewards-cat  { flex: 1; font-weight: 600; color: #1a202c; }
+.db-rewards-rate { color: #2b6cb0; font-weight: 600; font-size: 0.8rem; white-space: nowrap; }
+.db-rewards-earned { font-weight: 700; color: #276749; white-space: nowrap; min-width: 5rem; text-align: right; }
+
+/* ── Terms list ───────────────────────────────────────────────────────────── */
+.db-terms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.db-terms-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f0f4f8;
+  font-size: 0.875rem;
+}
+
+.db-terms-row:last-child { border-bottom: none; }
+
+.db-terms-label { color: #718096; font-weight: 500; }
+.db-terms-value { color: #1a202c; font-weight: 600; text-align: right; }
+
+/* ── Offers list ──────────────────────────────────────────────────────────── */
+.db-offers-welcome {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.db-offers-welcome-icon { font-size: 2rem; flex-shrink: 0; }
+.db-offers-welcome-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 0.2rem;
+}
+.db-offers-welcome-value { font-size: 1.1rem; font-weight: 800; color: #fff; }
+
+.db-offers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.db-offers-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #f0f4f8;
+  font-size: 0.875rem;
+}
+
+.db-offers-row:last-child { border-bottom: none; }
+
+.db-offers-icon { font-size: 1.3rem; width: 2rem; text-align: center; flex-shrink: 0; }
+.db-offers-text { color: #1a202c; font-weight: 500; }
+
+/* ── No card fallback ─────────────────────────────────────────────────────── */
+.db-no-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: #a0aec0;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 /* ── Responsive ───────────────────────────────────────────────────────────── */
 @media (max-width: 680px) {
   .db-topbar { padding: 0.75rem 1rem; }
@@ -279,4 +449,7 @@
   .db-balance-card   { padding: 1.5rem 1.25rem; }
 
   .db-details-row { grid-template-columns: 1fr; }
+
+  .db-rewards-summary { padding: 1.25rem; gap: 1rem; }
+  .db-tab-btn { font-size: 0.75rem; padding: 0.45rem 0.5rem; }
 }

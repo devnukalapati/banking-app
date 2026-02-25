@@ -35,6 +35,9 @@ CREATE TABLE IF NOT EXISTS customers (
     -- SSN — stored as AES-256-GCM ciphertext (base64 encoded: IV || ciphertext)
     ssn_encrypted    TEXT            NOT NULL,
 
+    -- Card product selected during application
+    card_product       VARCHAR(50),
+
     -- Application decision (APPROVED | PENDING | DECLINED)
     application_status VARCHAR(20)   NOT NULL DEFAULT 'PENDING',
 
@@ -42,6 +45,9 @@ CREATE TABLE IF NOT EXISTS customers (
     created_at       TIMESTAMPTZ     NOT NULL DEFAULT NOW(),
     updated_at       TIMESTAMPTZ     NOT NULL DEFAULT NOW()
 );
+
+-- Add card_product for existing deployments
+ALTER TABLE customers ADD COLUMN IF NOT EXISTS card_product VARCHAR(50);
 
 -- Fast email lookups
 CREATE INDEX IF NOT EXISTS idx_customers_email ON customers(email);
