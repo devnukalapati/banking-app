@@ -183,6 +183,23 @@
   color: #718096;
 }
 
+.landing-footer-admin {
+  margin-top: 0.5rem;
+}
+
+.landing-admin-link {
+  color: #a0aec0;
+  font-size: 0.75rem;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.landing-admin-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
 /* ── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 820px) {
   .cc-row {
