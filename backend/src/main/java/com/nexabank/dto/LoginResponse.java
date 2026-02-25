@@ -15,5 +15,6 @@ public class LoginResponse {
     private String firstName;
     private String lastName;
     private ApplicationStatus applicationStatus;
+    private String cardProduct;
     private boolean mfaVerified;
 }

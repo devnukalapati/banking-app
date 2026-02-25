@@ -32,6 +32,7 @@ public class CustomerResponse {
     private String accountType;
     private String creditScoreRange;
     private String ssnMasked;
+    private String cardProduct;
     private ApplicationStatus applicationStatus;
     private LocalDateTime createdAt;
 }

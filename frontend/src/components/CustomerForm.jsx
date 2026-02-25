@@ -96,7 +96,8 @@ export default function CustomerForm({ onSuccess, selectedCard }) {
 
     setSubmitting(true);
     try {
-      const response = await submitCustomer(buildPayload(formData));
+      const payload = { ...buildPayload(formData), cardProduct: selectedCard?.id ?? null };
+      const response = await submitCustomer(payload);
       onSuccess(response);
     } catch (err) {
       const apiMessage =

@@ -83,6 +83,10 @@ public class Customer {
     @Column(name = "ssn_encrypted", nullable = false, columnDefinition = "TEXT")
     private String ssnEncrypted;
 
+    // Card product (e.g. "signature" | "cashback" | "platinum" | "student")
+    @Column(name = "card_product", length = 50)
+    private String cardProduct;
+
     // Application decision
     @Enumerated(EnumType.STRING)
     @Column(name = "application_status", nullable = false, length = 20)

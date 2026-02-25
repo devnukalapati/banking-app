@@ -43,6 +43,7 @@ public class UserLoginService {
                 .firstName(customer.getFirstName())
                 .lastName(customer.getLastName())
                 .applicationStatus(customer.getApplicationStatus())
+                .cardProduct(customer.getCardProduct())
                 .mfaVerified(user.isMfaVerified())
                 .build();
     }

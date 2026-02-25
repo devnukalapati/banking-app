@@ -16,6 +16,13 @@ export const CREDIT_CARDS = [
       { icon: '🌍', text: 'No foreign transaction fees' },
       { icon: '🛋️', text: 'Complimentary airport lounge access' },
     ],
+    rewards: {
+      type: 'points',
+      categories: { Entertainment: 3, Dining: 2, Shopping: 2, '*': 1 },
+      pointValue: 0.01,
+      welcomeBonus: 50000,
+      welcomeBonusLabel: '50,000 welcome points',
+    },
   },
   {
     id: 'cashback',
@@ -34,6 +41,13 @@ export const CREDIT_CARDS = [
       { icon: '💵', text: '$200 cashback welcome bonus' },
       { icon: '🚫', text: 'No annual fee, ever' },
     ],
+    rewards: {
+      type: 'cashback',
+      categories: { Groceries: 3, Transportation: 2, '*': 1 },
+      pointValue: 0.01,
+      welcomeBonus: 200,
+      welcomeBonusLabel: '$200 cashback welcome bonus',
+    },
   },
   {
     id: 'platinum',
@@ -52,6 +66,13 @@ export const CREDIT_CARDS = [
       { icon: '📊', text: 'Free credit score monitoring' },
       { icon: '🛡️', text: 'Purchase & travel protection' },
     ],
+    rewards: {
+      type: 'points',
+      categories: { '*': 1 },
+      pointValue: 0.01,
+      welcomeBonus: 10000,
+      welcomeBonusLabel: '10,000 welcome points',
+    },
   },
   {
     id: 'student',
@@ -70,5 +91,12 @@ export const CREDIT_CARDS = [
       { icon: '👀', text: 'Free credit monitoring included' },
       { icon: '🚫', text: 'No annual fee, ever' },
     ],
+    rewards: {
+      type: 'cashback',
+      categories: { '*': 1 },
+      pointValue: 0.01,
+      welcomeBonus: 0,
+      welcomeBonusLabel: null,
+    },
   },
 ];

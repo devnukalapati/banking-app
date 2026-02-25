@@ -61,6 +61,7 @@ class CustomerServiceTest {
         validRequest.setAccountType("CHECKING");
         validRequest.setCreditScoreRange("740-799");
         validRequest.setSsn("987-65-4321");
+        validRequest.setCardProduct("cashback");
 
         savedCustomer = Customer.builder()
                 .id(UUID.randomUUID())
@@ -83,6 +84,7 @@ class CustomerServiceTest {
                 .accountType("CHECKING")
                 .creditScoreRange("740-799")
                 .ssnEncrypted("encrypted-ssn-blob")
+                .cardProduct("cashback")
                 .applicationStatus(ApplicationStatus.APPROVED)
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -99,6 +101,7 @@ class CustomerServiceTest {
 
         assertThat(response.getEmail()).isEqualTo("jane.smith@example.com");
         assertThat(response.getSsnMasked()).isEqualTo("***-**-4321");
+        assertThat(response.getCardProduct()).isEqualTo("cashback");
         assertThat(response.getApplicationStatus()).isNotNull();
         verify(customerRepository).save(any(Customer.class));
     }
