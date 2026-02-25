@@ -90,6 +90,28 @@ CREATE TABLE IF NOT EXISTS transactions (
 
 CREATE INDEX IF NOT EXISTS idx_transactions_account_id ON transactions(account_id);
 
+-- ── Credit Card Products ─────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS credit_cards (
+    id                   UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    card_id              VARCHAR(50)     NOT NULL UNIQUE,
+    name                 VARCHAR(100)    NOT NULL,
+    tagline              VARCHAR(255),
+    network              VARCHAR(20)     NOT NULL,
+    annual_fee           VARCHAR(50)     NOT NULL DEFAULT '$0',
+    apr                  VARCHAR(100)    NOT NULL,
+    gradient             VARCHAR(500)    NOT NULL,
+    chip_color           VARCHAR(20)     NOT NULL DEFAULT '#e0e0e0',
+    number_suffix        VARCHAR(4)      NOT NULL,
+    rewards_type         VARCHAR(20)     NOT NULL,
+    rewards_categories   TEXT            NOT NULL,
+    point_value          DECIMAL(6,4)    NOT NULL DEFAULT 0.0100,
+    welcome_bonus        DECIMAL(15,2)   NOT NULL DEFAULT 0.00,
+    welcome_bonus_label  VARCHAR(255),
+    offers               TEXT            NOT NULL,
+    created_at           TIMESTAMPTZ     NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_credit_cards_card_id ON credit_cards(card_id);
+
 -- Auto-update updated_at on row modification
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$

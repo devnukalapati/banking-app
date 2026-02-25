@@ -1,9 +1,20 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Banner from '../components/Banner';
 import CardArt from '../components/CardArt';
 import { CREDIT_CARDS } from '../data/creditCards';
+import { getCreditCards } from '../services/creditCardApi';
 import './LandingPage.css';
 
 export default function LandingPage({ onApply, onLogin }) {
+  const [cards, setCards] = useState(CREDIT_CARDS);
+
+  useEffect(() => {
+    getCreditCards()
+      .then((data) => { if (data.length > 0) setCards(data); })
+      .catch(() => {});  // silent fallback to static data
+  }, []);
+
   return (
     <div className="landing-page">
       <Banner />
@@ -24,7 +35,7 @@ export default function LandingPage({ onApply, onLogin }) {
 
       {/* Card catalog */}
       <div className="landing-catalog">
-        {CREDIT_CARDS.map((card) => (
+        {cards.map((card) => (
           <div key={card.id} className="cc-row">
             {/* Card art */}
             <div className="cc-art-wrap">
@@ -80,6 +91,9 @@ export default function LandingPage({ onApply, onLogin }) {
           <button className="landing-login-link" onClick={onLogin}>
             Log in to your account →
           </button>
+        </p>
+        <p className="landing-footer-admin">
+          <Link to="/admin/login" className="landing-admin-link">Admin Portal</Link>
         </p>
       </footer>
     </div>

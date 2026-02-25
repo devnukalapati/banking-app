@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Banner from './components/Banner';
 import CustomerForm from './components/CustomerForm';
 import ApprovedPage from './pages/ApprovedPage';
@@ -10,17 +11,27 @@ import WelcomePage from './pages/WelcomePage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import AdminLoginPage from './pages/AdminLoginPage';
+import AdminOffersPage from './pages/AdminOffersPage';
 
-export default function App() {
-  const [step, setStep]                       = useState('landing');
-  const [selectedCard, setSelectedCard]       = useState(null);
-  const [applicationData, setApplicationData] = useState(null);
+// Guard: redirect to /admin/login if not authenticated
+function AdminOffersGuard() {
+  const isAdmin = localStorage.getItem('nexabank-admin');
+  if (!isAdmin) return <Navigate to="/admin/login" replace />;
+  return <AdminOffersPage />;
+}
+
+// Existing state-machine app (unchanged)
+function MainApp() {
+  const [step, setStep]                         = useState('landing');
+  const [selectedCard, setSelectedCard]         = useState(null);
+  const [applicationData, setApplicationData]   = useState(null);
   const [registrationData, setRegistrationData] = useState(null);
-  const [loginData, setLoginData]             = useState(null);
+  const [loginData, setLoginData]               = useState(null);
 
   function handleApplicationSuccess(data) {
     setApplicationData(data);
-    setStep(data.applicationStatus.toLowerCase()); // 'approved' | 'pending' | 'declined'
+    setStep(data.applicationStatus.toLowerCase());
   }
 
   function handleReset() {
@@ -143,4 +154,14 @@ export default function App() {
         </div>
       );
   }
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<MainApp />} />
+      <Route path="/admin/login" element={<AdminLoginPage />} />
+      <Route path="/admin/offers" element={<AdminOffersGuard />} />
+    </Routes>
+  );
 }
