@@ -22,35 +22,35 @@ const GRADIENTS = [
 const CATEGORIES = ['Groceries', 'Dining', 'Entertainment', 'Shopping', 'Transportation', 'Travel', 'Utilities', 'Gas'];
 
 const INITIAL_FORM = {
-  name:             '',
-  tagline:          '',
-  network:          'VISA',
-  annualFeePreset:  '$0',
-  annualFeeCustom:  '',
-  apr:              '',
-  gradientIndex:    0,
-  rewardsType:      'points',
+  name:              '',
+  tagline:           '',
+  network:           'VISA',
+  annualFeePreset:   '$0',
+  annualFeeCustom:   '',
+  apr:               '',
+  gradientIndex:     0,
+  rewardsType:       'points',
   defaultMultiplier: 1,
-  categoryRows:     [],
-  welcomeBonus:     '',
-  welcomeBonusLabel:'',
-  offerRows:        [{ icon: '', text: '' }],
+  categoryRows:      [],
+  welcomeBonus:      '',
+  welcomeBonusLabel: '',
+  offerRows:         [{ icon: '', text: '' }],
 };
 
 function buildPreviewCard(form) {
   const g = GRADIENTS[form.gradientIndex] || GRADIENTS[0];
   return {
-    id:          'preview',
-    name:        form.name || 'New Card',
-    tagline:     form.tagline || '',
-    network:     form.network,
-    annualFee:   form.annualFeePreset === 'Custom' ? (form.annualFeeCustom || '$0') : form.annualFeePreset,
-    apr:         form.apr || '—',
-    gradient:    g.gradient,
-    chipColor:   g.chipColor,
-    numberSuffix:'0000',
-    offers:      [],
-    rewards:     null,
+    id:           'preview',
+    name:         form.name || 'New Card',
+    tagline:      form.tagline || '',
+    network:      form.network,
+    annualFee:    form.annualFeePreset === 'Custom' ? (form.annualFeeCustom || '$0') : form.annualFeePreset,
+    apr:          form.apr || '—',
+    gradient:     g.gradient,
+    chipColor:    g.chipColor,
+    numberSuffix: '0000',
+    offers:       [],
+    rewards:      null,
   };
 }
 
@@ -61,28 +61,108 @@ function buildPayload(form) {
     if (row.category) categories[row.category] = Number(row.multiplier) || 1;
   }
   return {
-    name:             form.name.trim(),
-    tagline:          form.tagline.trim(),
-    network:          form.network,
-    annualFee:        form.annualFeePreset === 'Custom' ? (form.annualFeeCustom || '$0') : form.annualFeePreset,
-    apr:              form.apr.trim(),
-    gradient:         g.gradient,
-    chipColor:        g.chipColor,
-    rewardsType:      form.rewardsType,
+    name:              form.name.trim(),
+    tagline:           form.tagline.trim(),
+    network:           form.network,
+    annualFee:         form.annualFeePreset === 'Custom' ? (form.annualFeeCustom || '$0') : form.annualFeePreset,
+    apr:               form.apr.trim(),
+    gradient:          g.gradient,
+    chipColor:         g.chipColor,
+    rewardsType:       form.rewardsType,
     rewardsCategories: categories,
-    pointValue:       0.01,
-    welcomeBonus:     Number(form.welcomeBonus) || 0,
+    pointValue:        0.01,
+    welcomeBonus:      Number(form.welcomeBonus) || 0,
     welcomeBonusLabel: form.welcomeBonusLabel.trim() || null,
-    offers:           form.offerRows
-                        .filter((r) => r.text.trim())
-                        .map((r) => ({ icon: r.icon.trim(), text: r.text.trim() })),
+    offers:            form.offerRows
+                         .filter((r) => r.text.trim())
+                         .map((r) => ({ icon: r.icon.trim(), text: r.text.trim() })),
   };
 }
 
+// ── Success screen ────────────────────────────────────────────────────────────
+function SuccessScreen({ card, onCreateAnother, onSignOut }) {
+  return (
+    <div className="aof-success-page">
+      <div className="aof-success-card">
+        {/* Badge */}
+        <div className="aof-success-badge" aria-hidden="true">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="26" cy="26" r="26" fill="#d1fae5" />
+            <path d="M14 27l8 8 16-16" stroke="#059669" strokeWidth="3.5"
+                  strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+
+        <h1 className="aof-success-title">Card Product Created!</h1>
+        <p className="aof-success-subtitle">
+          <strong>{card.name}</strong> is now live and available on the landing page.
+        </p>
+
+        {/* Card art */}
+        <div className="aof-success-art-wrap">
+          <CardArt card={card} size="lg" />
+        </div>
+
+        {/* Key specs */}
+        <div className="aof-success-specs">
+          <div className="aof-success-spec">
+            <span className="aof-success-spec-label">Network</span>
+            <span className="aof-success-spec-value">{card.network}</span>
+          </div>
+          <div className="aof-success-spec">
+            <span className="aof-success-spec-label">Annual Fee</span>
+            <span className="aof-success-spec-value">{card.annualFee}</span>
+          </div>
+          <div className="aof-success-spec">
+            <span className="aof-success-spec-label">APR</span>
+            <span className="aof-success-spec-value">{card.apr || '—'}</span>
+          </div>
+          <div className="aof-success-spec">
+            <span className="aof-success-spec-label">Rewards</span>
+            <span className="aof-success-spec-value" style={{ textTransform: 'capitalize' }}>
+              {card.rewards?.type ?? '—'}
+            </span>
+          </div>
+          {card.rewards?.welcomeBonusLabel && (
+            <div className="aof-success-spec aof-success-spec--wide">
+              <span className="aof-success-spec-label">Welcome Bonus</span>
+              <span className="aof-success-spec-value">{card.rewards.welcomeBonusLabel}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Perks list */}
+        {card.offers?.length > 0 && (
+          <ul className="aof-success-offers">
+            {card.offers.map((o, i) => (
+              <li key={i} className="aof-success-offer-item">
+                <span className="aof-success-offer-icon">{o.icon}</span>
+                <span className="aof-success-offer-text">{o.text}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {/* Actions */}
+        <div className="aof-success-actions">
+          <button className="aof-success-btn-primary" onClick={onCreateAnother}>
+            Create Another Card
+          </button>
+          <button className="aof-success-btn-secondary" onClick={onSignOut}>
+            Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Main component ────────────────────────────────────────────────────────────
 export default function AdminOffersPage() {
   const [form, setForm]           = useState(INITIAL_FORM);
   const [submitting, setSubmitting] = useState(false);
-  const [toast, setToast]         = useState(null);
+  const [submitError, setSubmitError] = useState('');
+  const [createdCard, setCreatedCard] = useState(null);
   const navigate = useNavigate();
 
   function set(field, value) {
@@ -128,24 +208,24 @@ export default function AdminOffersPage() {
     });
   }
 
-  function showToast(msg) {
-    setToast(msg);
-    setTimeout(() => setToast(null), 4000);
-  }
-
   async function handleSubmit(e) {
     e.preventDefault();
     if (!form.name.trim()) return;
+    setSubmitError('');
     setSubmitting(true);
     try {
       const created = await createCreditCard(buildPayload(form));
-      showToast(`"${created.name}" created successfully!`);
-      setForm(INITIAL_FORM);
+      setCreatedCard(created);   // show success screen
     } catch {
-      showToast('Failed to create card. Please try again.');
+      setSubmitError('Failed to create card. Please check your inputs and try again.');
     } finally {
       setSubmitting(false);
     }
+  }
+
+  function handleCreateAnother() {
+    setCreatedCard(null);
+    setForm(INITIAL_FORM);
   }
 
   function handleSignOut() {
@@ -153,8 +233,33 @@ export default function AdminOffersPage() {
     navigate('/');
   }
 
+  // ── Success screen ──────────────────────────────────────────────────────────
+  if (createdCard) {
+    return (
+      <div className="admin-offers-page">
+        <header className="admin-offers-header">
+          <div className="admin-offers-header-inner">
+            <div className="admin-offers-brand">
+              <span className="admin-offers-logo">NexaBank</span>
+              <span className="admin-offers-section">Card Management</span>
+            </div>
+            <button className="admin-signout-btn" onClick={handleSignOut}>
+              Sign Out
+            </button>
+          </div>
+        </header>
+        <SuccessScreen
+          card={createdCard}
+          onCreateAnother={handleCreateAnother}
+          onSignOut={handleSignOut}
+        />
+      </div>
+    );
+  }
+
   const previewCard = buildPreviewCard(form);
 
+  // ── Form screen ─────────────────────────────────────────────────────────────
   return (
     <div className="admin-offers-page">
       {/* Header */}
@@ -424,6 +529,12 @@ export default function AdminOffersPage() {
                 </button>
               </section>
 
+              {submitError && (
+                <div className="aof-submit-error" role="alert">
+                  {submitError}
+                </div>
+              )}
+
               <button
                 type="submit"
                 className="aof-submit-btn"
@@ -460,13 +571,6 @@ export default function AdminOffersPage() {
           </div>
         </div>
       </main>
-
-      {/* Toast notification */}
-      {toast && (
-        <div className="aof-toast" role="status">
-          {toast}
-        </div>
-      )}
     </div>
   );
 }
